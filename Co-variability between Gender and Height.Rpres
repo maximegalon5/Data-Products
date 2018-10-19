@@ -1,0 +1,54 @@
+Co-variability between Gender and Height
+========================================================
+author: Vivek Narayan
+date: October 19, 2018
+width: 1440
+height: 1000
+
+Difference in weight between males and females
+========================================================
+```{r, echo=FALSE}
+library(tidyverse)
+mini_data_set <- readRDS("~/R/Data Products/Week 4 Submission/Fun_with_weight/mini_brfss.rds")
+```
+
+If one didn't know anything about human physiology, one could naively think the difference in weight was due to gender, per se. However, that would fail to account for the fact that on average human males tend to be taller than human females.
+
+```{r, echo=F}
+mini_data_set %>% ggplot(aes(x = log(Weight))) + 
+  geom_density(aes(fill = Gender), alpha = 0.2) +
+  theme_minimal()
+```
+
+
+Variability in Human weight due to height
+========================================================
+
+```{r, echo = FALSE}
+model_object <- lm(formula = log(mini_data_set$Weight) ~ mini_data_set$Height)
+summary(model_object)
+```
+
+Note the R-squared value: ~25 % of the variability in Weight can be attributed to the variability in Height. What attribution can be made to Gender?
+
+
+The App Overview
+========================================================
+
+- The app allows users to choose between displaying the distibution of Weight [Data obtained from the BRFSS Dataset]("https://www.cdc.gov/brfss/annual_data/annual_2017.html") through the framing reference of:
+    + Gender
+    + Aerobic Excercise - whether a survey respondant met the aerobic activitiy requirements or not per BRFSS research guidelines (see `X_PAINDX1` in dataset [codebook]("https://www.cdc.gov/brfss/annual_data/2017/pdf/codebook17_llcp-v2-508.pdf"))
+
+- The app then invites the user to click a button to perform a regression analysis on Weight v. their chosen factor variable after controlling for Height.
+
+- Apart from satisfying the requirements of the submission, the objective to the app is to demonstrate the co-variability between Gender and Height when considering variability in Weight among humans. Why not check it out? [link]("http://gormonjee.shinyapps.io/Gender_and_Height")
+
+
+Links
+========================================================
+
+The app can be found [here]("http://gormonjee.shinyapps.io/Gender_and_Height")
+
+The BRFSS dataset can be found [here]("https://www.cdc.gov/brfss/annual_data/annual_2017.html")
+
+The github repo for the entire project can be found [here]("https://github.com/maximegalon5/Data-Products")
