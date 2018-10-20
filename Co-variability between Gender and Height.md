@@ -7,26 +7,36 @@ height: 1000
 
 Difference in weight between males and females
 ========================================================
-```{r, echo=FALSE}
-library(tidyverse)
-mini_data_set <- readRDS("~/R/Data Products/Week 4 Submission/Fun_with_weight/mini_brfss.rds")
-```
+
 
 If one didn't know anything about human physiology, one could naively think the difference in weight was due to gender, per se. However, that would fail to account for the fact that on average human males tend to be taller than human females.
 
-```{r, echo=F}
-mini_data_set %>% ggplot(aes(x = log(Weight))) + 
-  geom_density(aes(fill = Gender), alpha = 0.2) +
-  theme_minimal()
-```
+![plot of chunk unnamed-chunk-2](Co-variability between Gender and Height-figure/unnamed-chunk-2-1.png)
 
 
 Variability in Human weight due to height
 ========================================================
 
-```{r, echo = FALSE}
-model_object <- lm(formula = log(mini_data_set$Weight) ~ mini_data_set$Height)
-summary(model_object)
+
+```
+
+Call:
+lm(formula = log(mini_data_set$Weight) ~ mini_data_set$Height)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.0982 -0.1451 -0.0132  0.1308  1.2417 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          6.9985893  0.0353172  198.16   <2e-16 ***
+mini_data_set$Height 0.0116506  0.0002075   56.16   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2099 on 9108 degrees of freedom
+Multiple R-squared:  0.2572,	Adjusted R-squared:  0.2571 
+F-statistic:  3154 on 1 and 9108 DF,  p-value: < 2.2e-16
 ```
 
 Note the R-squared value: ~25 % of the variability in Weight can be attributed to the variability in Height. What attribution can be made to Gender?
