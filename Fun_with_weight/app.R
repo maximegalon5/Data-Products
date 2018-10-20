@@ -1,6 +1,6 @@
 library(shiny)
 library(tidyverse)
-
+mini_data_set <- readRDS("mini_brfss.rds")
 # Define UI for application that draws a histogram
 ui <- fluidPage(
    
@@ -46,7 +46,7 @@ ui <- fluidPage(
                                      a("CDC's Website to the BRFSS Dataset", href="https://www.cdc.gov/brfss/annual_data/annual_2017.html"),
                                      h5("Note the 2017 dataset was used for this analysis. The dataset is rather large and available to download in ASCII and *.XPT format. The *.XPT format was downloaded locally, select variables manipulated, and then stored in R's *.rds format."),
                                      hr(),
-                                     h5("Github repo for this project", href="")
+                                     h5("Github repo for this project", href="https://github.com/maximegalon5/Data-Products")
                                      )
                 )
    )
