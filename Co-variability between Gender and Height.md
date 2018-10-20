@@ -47,7 +47,7 @@ The App Overview
 
 - The app allows users to choose between displaying the distibution of Weight (Data obtained from the BRFSS Dataset) <https://www.cdc.gov/brfss/annual_data/annual_2017.html> through the framing reference of:
     + Gender
-    + Aerobic Excercise - whether a survey respondant met the aerobic activitiy requirements or not per BRFSS research guidelines (see `X_PAINDX1` in dataset codebook <https://www.cdc.gov/brfss/annual_data/2017/pdf/codebook17_llcp-v2-508.pdf>
+    + Aerobic Excercise - whether a survey respondant met the aerobic activitiy requirements or not per BRFSS research guidelines (see `X_PAINDX1` in dataset codebook <https://www.cdc.gov/brfss/annual_data/2017/pdf/codebook17_llcp-v2-508.pdf>)
 
 - The app then invites the user to click a button to perform a regression analysis on Weight v. their chosen factor variable after controlling for Height.
 
