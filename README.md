@@ -1,4 +1,4 @@
-# Data-Products
+# Data-Products-Submission
 Submissions for the Data Products Coursera module
 
 
