@@ -1,8 +1,6 @@
-# Data-Products
-Submissions for the Data Products Coursera module
+# Data-Products-Submission
 
-
-This repo contains the project files for a submission to the Data Products Coursera Module.
+This repo contains the project files for a submission to the Data Products Coursera Module (part of the Data Science Specialization offered by JHU).
 
 The applet can be found here - https://gormonjee.shinyapps.io/Fun_with_weight/
 
