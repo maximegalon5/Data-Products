@@ -1,13 +1,16 @@
+#setup work space
 library(shiny)
 library(tidyverse)
+# load data
 mini_data_set <- readRDS("mini_brfss.rds")
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
    
    # Application title
    titlePanel("Does gender influence weight more than aerobic excercise after controlling for Height?"),
    
-   # Sidebar with a slider input for number of bins 
+   # Sidebar with a input choice and explanatory text
    sidebarLayout(
       sidebarPanel(
          selectInput("Choice",
@@ -15,15 +18,15 @@ ui <- fluidPage(
                      choices = c("None", "Gender", "Aerobic Excercise"),
                      selected = "None"
                      ),
-         actionButton("goButton", "Show lm() call on residuals"),
-         verbatimTextOutput("ex_text")
+         actionButton("goButton", "Show lm() call on residuals"), # action to call lm()
+         verbatimTextOutput("ex_text") # explanatory text
          ),
       # Show a plot of the generated distribution
       mainPanel(tabsetPanel(type = "tabs",
                             tabPanel("Plot", 
-                                     plotOutput("distPlot"),
+                                     plotOutput("distPlot"), # Main plot output
                                      verbatimTextOutput("summary_text")),
-                            tabPanel("Documentation", 
+                            tabPanel("Documentation", # Documentation
                                      h3("Introduction and Data source"),
                                      h5("This Shiny App had been made as part of the Data Products course on Coursera offered by the Bloomberg School of Public Health at Johns Hopkins University."),
                                      h5("The data source is the BRFSS Dataset maintained by the Center for Disease Control (CDC)."),
@@ -40,7 +43,7 @@ ui <- fluidPage(
                                      h3("Conclusion"),
                                      h5("There are Weight differences between human males and females, but that difference is due to average differences in height plus other factors not explored here. Gender, per se, has very little influence. Interestingly, according the the BRFSS data analysed by this methodology, meeting Aerobic excercise targets has little influece on the variability of Weight observed in this data.")),
                             tabPanel("Links and References",
-                                     h3("Links"),
+                                     h3("Links"), # Links
                                      a("Data Products Coursera Link", href="https://www.coursera.org/learn/data-products/home/welcome"),
                                      hr(),
                                      a("CDC's Website to the BRFSS Dataset", href="https://www.cdc.gov/brfss/annual_data/annual_2017.html"),
@@ -53,11 +56,12 @@ ui <- fluidPage(
 )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic required to draw a density
 server <- function(input, output) {
-  model_lm <- lm(formula = log(mini_data_set$Weight) ~ log(mini_data_set$Height))
+  model_lm <- lm(formula = log(mini_data_set$Weight) ~ log(mini_data_set$Height)) # regression model
   mini_data_set <- readRDS("mini_brfss.rds")
   output$model <- renderPrint(summary(model_lm))
+  # main logic based on user input resulting in different regression outputs
    output$distPlot <- renderPlot({
      if (input$Choice == "Gender") {
        y <<- mini_data_set$Gender
@@ -72,6 +76,7 @@ server <- function(input, output) {
        lab <<- "Weight distribution"
        subtitle <- ""
      }
+      # plot output
       mini_data_set %>% ggplot(aes(x = Weight/100)) + 
        geom_density(aes(fill = y), alpha = 0.2) +
        scale_fill_discrete(name = lab) +
@@ -80,6 +85,7 @@ server <- function(input, output) {
              subtitle = subtitle) +
        theme_minimal()
       })
+   # summary of the regression model output
    output$summary_text <- renderPrint({
      input$goButton
      if (input$goButton <= 0){
@@ -89,6 +95,7 @@ server <- function(input, output) {
      summary(model_object)
      }
    })
+   # logic call waiting for user input
    observeEvent(input$goButton, {
    output$ex_text <<- renderPrint({
      if (lab == "Gender"){
